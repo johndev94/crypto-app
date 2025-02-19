@@ -12,5 +12,12 @@ export default function Todo(){
         return <span>There is an error</span>
     }
 
-    return<>{todosIdsQuery.data.map((id) => (<p key={id}>{id}</p>) )}</>
+    return(
+        <>
+            <p>Query function status: {todosIdsQuery.fetchStatus}</p>
+            {todosIdsQuery.data.map((id) => (
+                <p key={id}>{id}</p>
+            ))}
+        </>
+    );
 }

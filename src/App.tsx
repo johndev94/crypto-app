@@ -1,12 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react"
-import Todo from "./Components/Todo";
-
+import { useEffect, useState } from "react";
+import Todos from "./Components/Todo";
 
 function App() {
-
-  return <><Todo /></>;
+  return (
+    <>
+      <Todos />
+    </>
+  );
 }
 
-export default App
+export default App;

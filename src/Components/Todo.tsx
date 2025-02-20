@@ -1,14 +1,16 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { createTodo } from "../services/api";
-import { useCreateTodo, useUpdateTodo } from "../services/mutations";
+import { useCreateTodo, useDeleteTodo, useUpdateTodo } from "../services/mutations";
 import { useTodos, useTodosIds } from "../services/queries";
 import { Todo } from "../types/todo";
 
 export default function Todos() {
   const todosIdsQuery = useTodosIds();
   const todosQueries = useTodos(todosIdsQuery.data);
+
   const createTodoMutation = useCreateTodo();
   const updateTodoMutation = useUpdateTodo();
+  const deleteTodoMutation = useDeleteTodo();
 
   const { register, handleSubmit } = useForm<Todo>();
 
@@ -20,7 +22,12 @@ export default function Todos() {
     if(data){
       updateTodoMutation.mutate({...data, checked: true});
     }
-    
+  }
+
+  const handleDeleteTodoSubmit = (id: number) => {
+    if(id){
+      deleteTodoMutation.mutate(id);
+    }
   }
 
   return (
@@ -46,6 +53,10 @@ export default function Todos() {
               <button onClick={() => handleMarkAsDoneSubmit(data)} disabled={data?.checked}>
                 {data?.checked ? "Done" : "Mark as done"}
               </button>
+              {data && data?.id && (
+                <button onClick={() => handleDeleteTodoSubmit(data.id!)}>Delete</button>
+              )}
+              
             </div>
           </li>
         ))}
